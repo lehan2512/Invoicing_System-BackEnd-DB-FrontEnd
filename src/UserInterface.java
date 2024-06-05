@@ -2,12 +2,12 @@ import java.sql.Date;
 import java.util.Scanner;
 
 public class UserInterface {
-    public void startApplication() {
+    public void runApplication() {
         mainMenu();
     }
 
-    public void mainMenu(){
-        Input mainMenuInput = new Input();
+    private void mainMenu(){
+        Input input = new Input();
         int mainMenuSelection = 0;
 
         while (mainMenuSelection != 4) {
@@ -18,12 +18,12 @@ public class UserInterface {
             "\n3. Invoicing System"+
             "\n4. Exit"+
             "\n\nEnter your choice: ");
-            mainMenuSelection = mainMenuInput.integer();
+            mainMenuSelection = input.integer();
 
             // validation of user input
             while (mainMenuSelection < 1 || mainMenuSelection > 4) {
                 System.out.println("Please enter a number between 1 and 4");
-                mainMenuSelection = mainMenuInput.integer();
+                mainMenuSelection = input.integer();
             }
 
             switch (mainMenuSelection) {
@@ -43,8 +43,8 @@ public class UserInterface {
         }
     }
 
-    public void ManageProductsMenu(){
-        Input productMenuInput = new Input();
+    private void ManageProductsMenu(){
+        Input input = new Input();
         int ProductMenuSelection = 0;
 
         while (ProductMenuSelection != 5) {
@@ -56,35 +56,35 @@ public class UserInterface {
                     "\n4. Remove Product"+
                     "\n5. Back to Main Menu"+
                     "\n\nEnter your choice: ");
-            ProductMenuSelection = productMenuInput.integer();
+            ProductMenuSelection = input.integer();
 
             // validation of user input
             while (ProductMenuSelection < 1 || ProductMenuSelection > 5) {
                 System.out.println("Please enter a number between 1 and 5");
-                ProductMenuSelection = productMenuInput.integer();
+                ProductMenuSelection = input.integer();
             }
 
             ProductController productController = new ProductController();
             switch (ProductMenuSelection) {
                 case 1:
-                    productController.addProduct("002", "Toys", "Kids playing item", 500, 1500.50);
+                    productController.add();
                     break;
                 case 2:
                     productController.updateProduct();
                     break;
                 case 3:
-                    productController.searchProduct();
+                    productController.search();
                     break;
                 case 4:
-                    productController.removeProduct();
+                    productController.remove();
                     break;
                 case 5:
                     break;
             }
         }
     }
-    public void ManageCustomersMenu(){
-        Input customerMenuInput = new Input();
+    private void ManageCustomersMenu(){
+        Input input = new Input();
         int CustomerMenuSelection = 0;
 
         while (CustomerMenuSelection != 5) {
@@ -96,35 +96,71 @@ public class UserInterface {
                     "\n4. Remove Customer"+
                     "\n5. Back to Main Menu"+
                     "\n\nEnter your choice: ");
-            CustomerMenuSelection = customerMenuInput.integer();
+            CustomerMenuSelection = input.integer();
 
             // validation of user input
             while (CustomerMenuSelection < 1 || CustomerMenuSelection > 5) {
                 System.out.println("Please enter a number between 1 and 5");
-                CustomerMenuSelection = customerMenuInput.integer();
+                CustomerMenuSelection = input.integer();
             }
 
             CustomerController customerController = new CustomerController();
             switch (CustomerMenuSelection) {
                 case 1:
                     Date date = new Date(1990, 1, 1);
-                    customerController.addCustomer();
+                    customerController.add();
                     break;
                 case 2:
                     customerController.updateCustomer();
                     break;
                 case 3:
-                    customerController.searchCustomer();
+                    customerController.search();
                     break;
                 case 4:
-                    customerController.removeCustomer();
+                    customerController.remove();
                     break;
                 case 5:
                     break;
             }
         }
     }
-    public void InvoicingSystemMenu(){
-        System.out.println("Invoicing System");
+    private void InvoicingSystemMenu(){
+        Input input = new Input();
+        int InvoiceMenuSelection = 0;
+
+        while (InvoiceMenuSelection != 5) {
+            System.out.println("\nER SYSTEM");
+            System.out.println("\nInvoice Menu"+
+                    "\n1. Create New Invoice"+
+                    "\n2. View Invoices"+
+                    "\n3. Back to Main Menu"+
+                    "\n\nEnter your choice: ");
+            InvoiceMenuSelection = input.integer();
+
+            // validation of user input
+            while (InvoiceMenuSelection < 1 || InvoiceMenuSelection > 5) {
+                System.out.println("Please enter a number between 1 and 5");
+                InvoiceMenuSelection = input.integer();
+            }
+
+            CustomerController customerController = new CustomerController();
+            switch (InvoiceMenuSelection) {
+                case 1:
+                    Date date = new Date(1990, 1, 1);
+                    customerController.add();
+                    break;
+                case 2:
+                    customerController.updateCustomer();
+                    break;
+                case 3:
+                    customerController.search();
+                    break;
+                case 4:
+                    customerController.remove();
+                    break;
+                case 5:
+                    break;
+            }
+        }
     }
 }

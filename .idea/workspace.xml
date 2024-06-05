@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7cb56128-8f17-45fe-a3a5-a230542a5f40" name="Changes" comment="basic changes">
-      <change afterPath="$PROJECT_DIR$/src/CustomerController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Input.java" afterDir="false" />
+    <list default="true" id="7cb56128-8f17-45fe-a3a5-a230542a5f40" name="Changes" comment="customer controller">
+      <change afterPath="$PROJECT_DIR$/src/Customer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/DBServices.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Input.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Input.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProductController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserInterface.java" afterDir="false" />
     </list>
@@ -91,7 +94,7 @@
       <updated>1717339741206</updated>
       <workItem from="1717339742257" duration="1210000" />
       <workItem from="1717513728826" duration="20572000" />
-      <workItem from="1717572713962" duration="15437000" />
+      <workItem from="1717572713962" duration="26296000" />
     </task>
     <task id="LOCAL-00001" summary="Product Controller">
       <option name="closed" value="true" />
@@ -109,7 +112,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717540138735</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="customer controller">
+      <option name="closed" value="true" />
+      <created>1717600131642</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1717600131642</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -174,7 +185,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Product Controller" />
     <MESSAGE value="basic changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="basic changes" />
+    <MESSAGE value="customer controller" />
+    <option name="LAST_COMMIT_MESSAGE" value="customer controller" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
