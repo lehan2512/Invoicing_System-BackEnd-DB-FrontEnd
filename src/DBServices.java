@@ -213,4 +213,57 @@ abstract class DBServices {
         }
         return exists;
     }
+
+    protected void checkoutProduct (String invoiceID){
+        Connection con = null;
+        PreparedStatement stmt = null;
+        DBConnector getCon = new DBConnector();
+
+        try {
+            con = getCon.getConnection();
+            Input input = new Input();
+            InvoicedProduct product = input.invoiceProduct(invoiceID);
+
+            // the transaction to be carried out - SQL statement
+            String queryString = "insert into invoiced_products (invoiceID, productID, quantity, unitPrice, total) values (?,?,?,?,?)";                			  		//System.out.println(queryString);
+
+            stmt = con.prepareStatement(queryString);  // creating the statement object to work with 									//database
+
+            stmt.setString(1, product.getInvoiceID());
+            stmt.setString(2, product.getProductID());
+            stmt.setInt(3, product.getQuantity());
+            stmt.setDouble(4, product.getUnitPrice());
+            stmt.setDouble(5, product.getTotal());
+
+            int i = stmt.executeUpdate();   // returns an integer - number of 										// records  added
+            ProductController productController = new ProductController();
+            productController.reduceQuantity(product.getProductID(), product.getQuantity());
+
+            if (i != 0){
+                System.out.println("Added successfully\n");
+            }
+            else{
+                System.out.println("Data update error");
+            }
+        } catch (SQLException e) {
+            System.out.println("Cannot find the database");
+            e.printStackTrace();
+
+        } finally {
+            try{
+                if(stmt != null) {
+                    stmt.close();
+                    stmt = null;
+                }
+
+                if(con != null) {
+                    con.close();
+                    con = null;
+                }
+            }catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
 }

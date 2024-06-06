@@ -143,6 +143,59 @@ public class CustomerController extends DBServices {
         }
     }
 
+    public Customer getCustomer(String ID){
+        Connection con = null;
+        PreparedStatement stmt = null;
+        DBConnector getCon = new DBConnector();
+        ResultSet resultset = null;
+        Customer customer = null;
+
+        try{
+            con = getCon.getConnection();
+
+            // retrieve the data in the table
+            String queryString = "select * from "+ getTableName() +" where ID = ?";
+
+            stmt = con.prepareStatement(queryString);  // creating the statement object to work with 									//database
+            stmt.setString(1, ID);
+            resultset = stmt.executeQuery();
+
+            if (resultset.next()) {  // Move the cursor to the first row
+                String id = resultset.getString("id");
+                String name = resultset.getString("name");
+                String email = resultset.getString("email");
+                String address = resultset.getString("address");
+                String contactNumber = resultset.getString("contactNumber");
+                Date dateOfBirth = resultset.getDate("dateOfBirth");
+                String gender = resultset.getString("gender");
+
+                customer = new Customer(id, name, email, address, contactNumber, dateOfBirth, gender);
+            } else {
+                System.out.println("No result found with ID = " + ID);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Cannot find the database");
+            e.printStackTrace();
+        }  finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                    stmt = null;
+                }
+
+                if (con != null) {
+                    con.close();
+                    con = null;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return customer;
+    }
+
     @Override
     String getTableName(){
         return "customers";

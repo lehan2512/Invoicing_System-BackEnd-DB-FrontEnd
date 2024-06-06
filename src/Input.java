@@ -1,4 +1,5 @@
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Scanner;
 
 public class Input implements AutoCloseable {
@@ -96,6 +97,58 @@ public class Input implements AutoCloseable {
         System.out.println("Enter Customer Gender: ");
         gender = string();
         return new Customer(ID, name, email, address, contactNumber, dateOfBirth, gender);
+    }
+
+    public InvoicedProduct invoiceProduct(String invoiceID){
+        System.out.println("Enter Product ID: ");
+        String productID = string();
+        ProductController productController = new ProductController();
+        if(!productController.checkExistence(productID)){
+            System.out.println("Product ID does not exists. Enter correct product ID.");
+            productID = string();
+        }
+
+        Product product = productController.getProduct(productID);
+        System.out.println("Available stock: " + product.getQuantity());
+        System.out.println("\nEnter Quantity: ");
+        int quantity = integer();
+        while(quantity > product.getQuantity()){
+            System.out.println("Quantity exceeds the stock.");
+            System.out.println("Available stock: " + product.getQuantity());
+            System.out.println("Enter sufficient quantity: ");
+            quantity = integer();
+        }
+        double unitPrice = product.getSellingPrice();
+        double total = unitPrice * quantity;
+
+        return new InvoicedProduct(invoiceID, productID, quantity, unitPrice, total);
+    }
+
+    public Invoice invoice(){
+        String ID = null;
+        Timestamp dateAndTime = null;
+        String customerID = null;
+        String customerName = null;
+
+        InvoiceController invoiceController = new InvoiceController();
+        System.out.println("Enter Invoice ID: ");
+        ID = string();
+        while(invoiceController.checkExistence(ID)){
+            System.out.println("Invoice ID already exists. Enter another invoice ID.");
+            ID = string();
+        }
+
+        System.out.println("Enter Customer ID: ");
+        customerID = string();
+        CustomerController customerController = new CustomerController();
+        while(!customerController.checkExistence(customerID)){
+            System.out.println("Customer ID does not exist. Enter valid customer ID.");
+            customerID = string();
+        }
+        Customer customer = customerController.getCustomer(customerID);
+        customerName = customer.getName();
+
+        return new Invoice(ID, dateAndTime, customerID, customerName);
     }
 
     @Override

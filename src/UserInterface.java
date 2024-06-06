@@ -107,7 +107,6 @@ public class UserInterface {
             CustomerController customerController = new CustomerController();
             switch (CustomerMenuSelection) {
                 case 1:
-                    Date date = new Date(1990, 1, 1);
                     customerController.add();
                     break;
                 case 2:
@@ -128,7 +127,7 @@ public class UserInterface {
         Input input = new Input();
         int InvoiceMenuSelection = 0;
 
-        while (InvoiceMenuSelection != 5) {
+        while (InvoiceMenuSelection != 3) {
             System.out.println("\nER SYSTEM");
             System.out.println("\nInvoice Menu"+
                     "\n1. Create New Invoice"+
@@ -143,22 +142,15 @@ public class UserInterface {
                 InvoiceMenuSelection = input.integer();
             }
 
-            CustomerController customerController = new CustomerController();
+            InvoiceController invoiceController = new InvoiceController();
             switch (InvoiceMenuSelection) {
                 case 1:
-                    Date date = new Date(1990, 1, 1);
-                    customerController.add();
+                    invoiceController.add();
                     break;
                 case 2:
-                    customerController.updateCustomer();
+                    invoiceController.searchInvoice();
                     break;
                 case 3:
-                    customerController.search();
-                    break;
-                case 4:
-                    customerController.remove();
-                    break;
-                case 5:
                     break;
             }
         }

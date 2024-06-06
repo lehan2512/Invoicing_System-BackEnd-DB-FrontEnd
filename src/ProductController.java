@@ -121,6 +121,57 @@ public class ProductController extends DBServices {
         }
     }
 
+    public Product getProduct(String ID){
+        Connection con = null;
+        PreparedStatement stmt = null;
+        DBConnector getCon = new DBConnector();
+        ResultSet resultset = null;
+        Product product = null;
+
+        try{
+            con = getCon.getConnection();
+
+            // retrieve the data in the table
+            String queryString = "select * from "+ getTableName() +" where ID = ?";
+
+            stmt = con.prepareStatement(queryString);  // creating the statement object to work with 									//database
+            stmt.setString(1, ID);
+            resultset = stmt.executeQuery();
+
+            if (resultset.next()) {  // Move the cursor to the first row
+                String id = resultset.getString("id");
+                String name = resultset.getString("name");
+                String description = resultset.getString("description");
+                int quantity = resultset.getInt("quantity");
+                double sellingPrice = resultset.getDouble("sellingPrice");
+
+                product = new Product(id, name, description, quantity, sellingPrice);
+            } else {
+                System.out.println("No result found with ID = " + ID);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Cannot find the database");
+            e.printStackTrace();
+        }  finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                    stmt = null;
+                }
+
+                if (con != null) {
+                    con.close();
+                    con = null;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return product;
+    }
+
     @Override
     String getTableName(){
         return "Stock_Products";
@@ -170,6 +221,54 @@ public class ProductController extends DBServices {
         }
         else{
             System.out.println("Data update error");
+        }
+    }
+
+    void reduceQuantity(String ID, int invoicedQuantity){
+        Connection con = null;
+        PreparedStatement stmt = null;
+        DBConnector getCon = new DBConnector();
+        String queryString = null;
+        int i = -1;
+        ProductController productController = new ProductController();
+        Product product = productController.getProduct(ID);
+
+        try {
+            con = getCon.getConnection();
+            queryString = "update Stock_Products set quantity= ? where ID= ?";
+            stmt = con.prepareStatement(queryString);  // creating the statement object to work with 									//database
+
+            stmt.setInt(1, (product.getQuantity()-invoicedQuantity));
+            stmt.setString(2, ID);
+
+            i = stmt.executeUpdate();   // returns an integer - number of
+            if(i != -1)
+            {
+                if (i != 0){}
+                else{
+                    System.out.println("Data update error\n");
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Cannot find the database");
+            e.printStackTrace();
+
+        } finally {
+            try{
+                if(stmt != null) {
+                    stmt.close();
+                    stmt = null;
+                }
+
+                if(con != null) {
+                    con.close();
+                    con = null;
+                }
+            }catch (SQLException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 }
