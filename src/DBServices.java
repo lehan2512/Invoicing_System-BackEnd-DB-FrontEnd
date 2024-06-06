@@ -10,8 +10,7 @@ abstract class DBServices {
 
     public DBServices() {}
 
-    public void add()
-    {
+    public void add() {
         Connection con = null;
         PreparedStatement stmt = null;
         DBConnector getCon = new DBConnector();
@@ -126,8 +125,7 @@ abstract class DBServices {
         }
     }
 
-    protected void display(String displayID)
-    {
+    protected void display(String displayID) {
         Connection con = null;
         PreparedStatement stmt = null;
         DBConnector getCon = new DBConnector();
@@ -266,4 +264,5 @@ abstract class DBServices {
 
         }
     }
+
 }

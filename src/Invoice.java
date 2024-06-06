@@ -1,11 +1,9 @@
-import java.sql.Date;
 import java.sql.Timestamp;
 
-public class Invoice {
-    private String ID;
-    private Timestamp dateAndTime;
-    private String customerID;
-    private String customerName;
+public class Invoice extends DBElement{
+    private final Timestamp dateAndTime;
+    private final String customerID;
+    private final String customerName;
 
     public Invoice(String ID, Timestamp dateAndTime, String customerID, String customerName) {
         this.ID = ID;
@@ -13,15 +11,15 @@ public class Invoice {
         this.customerID = customerID;
         this.customerName = customerName;
     }
-    public String getID() {
-        return ID;
-    }
+
     public Timestamp getDate() {
         return dateAndTime;
     }
+
     public String getCustomerID() {
         return customerID;
     }
+
     public String getCustomerName() {
         return customerName;
     }

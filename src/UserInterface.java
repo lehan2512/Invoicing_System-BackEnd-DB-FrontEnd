@@ -132,12 +132,13 @@ public class UserInterface {
             System.out.println("\nInvoice Menu"+
                     "\n1. Create New Invoice"+
                     "\n2. View Invoices"+
-                    "\n3. Back to Main Menu"+
+                    "\n3. View Invoices by Customer ID"+
+                    "\n4. Back to Main Menu"+
                     "\n\nEnter your choice: ");
             InvoiceMenuSelection = input.integer();
 
             // validation of user input
-            while (InvoiceMenuSelection < 1 || InvoiceMenuSelection > 5) {
+            while (InvoiceMenuSelection < 1 || InvoiceMenuSelection > 4) {
                 System.out.println("Please enter a number between 1 and 5");
                 InvoiceMenuSelection = input.integer();
             }
@@ -151,6 +152,9 @@ public class UserInterface {
                     invoiceController.searchInvoice();
                     break;
                 case 3:
+                    invoiceController.searchInvoicesByCustomerID();
+                    break;
+                case 4:
                     break;
             }
         }

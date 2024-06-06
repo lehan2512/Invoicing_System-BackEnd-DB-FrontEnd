@@ -183,8 +183,8 @@ public class ProductController extends DBServices {
             String id = resultSet.getString("id");
             String name = resultSet.getString("name");
             String description = resultSet.getString("description");
-            String quantity = resultSet.getString("quantity");
-            String sellingPrice = resultSet.getString("sellingPrice");
+            int quantity = resultSet.getInt("quantity");
+            double sellingPrice = resultSet.getDouble("sellingPrice");
 
             System.out.println("Product Details"+
                     "\n           ID: " + id +

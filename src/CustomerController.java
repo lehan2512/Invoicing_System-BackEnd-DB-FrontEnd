@@ -29,7 +29,7 @@ public class CustomerController extends DBServices {
                         " \n4. Update Contact Number"+
                         " \n5. Update Date of Birth"+
                         " \n6. Update Gender"+
-                        " \n7. Cancel"+
+                        " \n7. Back"+
                         "\nEnter your choice: ");
                 int choice = input.integer();
                 int i = -1;
@@ -160,19 +160,7 @@ public class CustomerController extends DBServices {
             stmt.setString(1, ID);
             resultset = stmt.executeQuery();
 
-            if (resultset.next()) {  // Move the cursor to the first row
-                String id = resultset.getString("id");
-                String name = resultset.getString("name");
-                String email = resultset.getString("email");
-                String address = resultset.getString("address");
-                String contactNumber = resultset.getString("contactNumber");
-                Date dateOfBirth = resultset.getDate("dateOfBirth");
-                String gender = resultset.getString("gender");
-
-                customer = new Customer(id, name, email, address, contactNumber, dateOfBirth, gender);
-            } else {
-                System.out.println("No result found with ID = " + ID);
-            }
+            viewData(resultset, ID);
 
         } catch (SQLException e) {
             System.out.println("Cannot find the database");
@@ -212,17 +200,23 @@ public class CustomerController extends DBServices {
             Date dateOfBirth = resultset.getDate("dateOfBirth");
             String gender = resultset.getString("gender");
 
-            System.out.println("Customer Details"+
-                    "\n            ID: " + id +
-                    "\n          Name: "+ name +
-                    "\n         Email: "+ email +
-                    "\n       Address: "+ address +
-                    "\nContact Number: "+ contactNumber +
-                    "\n Date of birth: "+ dateOfBirth +
-                    "\n        Gender: "+ gender + "\n");
+            Customer customer = new Customer(id, name, email, address, contactNumber, dateOfBirth, gender);
+            outputCustomerDetails(customer);
+
         } else {
             System.out.println("No result found with ID = " + displayID);
         }
+    }
+
+    void outputCustomerDetails(Customer customer){
+        System.out.println("Customer Details"+
+                "\n            ID: " + customer.getID() +
+                "\n          Name: "+ customer.getName() +
+                "\n         Email: "+ customer.getEmail() +
+                "\n       Address: "+ customer.getAddress() +
+                "\nContact Number: "+ customer.getContactNumber() +
+                "\n Date of birth: "+ customer.getDateOfBirth() +
+                "\n        Gender: "+ customer.getGender() + "\n");
     }
 
     @Override

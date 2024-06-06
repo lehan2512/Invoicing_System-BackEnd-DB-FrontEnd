@@ -68,6 +68,65 @@ public class InvoiceController extends DBServices {
         }
     }
 
+    public void searchInvoicesByCustomerID(){
+        Input input = new Input();
+        System.out.println("Enter customer ID: ");
+        String customerID = input.string();
+
+        CustomerController controller = new CustomerController();
+        while(!controller.checkExistence(customerID)){
+            System.out.println("Customer not found");
+            customerID = input.string();
+        }
+
+        System.out.println("\n\nInvoices of customer ID: " + customerID);
+
+        Connection con = null;
+        PreparedStatement stmt = null;
+        DBConnector getCon = new DBConnector();
+        ResultSet resultset = null;
+        Invoice invoice = null;
+
+        try{
+            con = getCon.getConnection();
+
+            // retrieve the data in the table
+            String queryString = "select * from invoices where customerID = ?";
+
+            stmt = con.prepareStatement(queryString);  // creating the statement object to work with 									//database
+            stmt.setString(1, customerID);
+            resultset = stmt.executeQuery();
+
+            if (resultset.next()) {  // Move the cursor to the first row
+                String id = resultset.getString("id");
+                Timestamp dateAndTime = resultset.getTimestamp("date");
+
+                System.out.println("Invoice ID:"+id+ "       Date and time:"+dateAndTime);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Cannot find the database");
+            e.printStackTrace();
+        }  finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                    stmt = null;
+                }
+
+                if (con != null) {
+                    con.close();
+                    con = null;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
+    }
+
     public Invoice getInvoice(String ID){
         Connection con = null;
         PreparedStatement stmt = null;
@@ -140,25 +199,6 @@ public class InvoiceController extends DBServices {
         }
     }
 
-    private void displayInvoice(String invoiceID) {
-
-        Invoice invoice = getInvoice(invoiceID);
-        Timestamp date = invoice.getDate();
-        String customerID = invoice.getCustomerID();
-        String customerName = invoice.getCustomerName();
-
-        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
-        System.out.println("                                         SALES INVOICE                                              \n");
-        System.out.println(" Invoice Date: " + date);
-        System.out.println(" Invoice ID: " + invoiceID);
-        System.out.println(" Customer ID: " + customerID);
-        System.out.println(" Customer Name: " + customerName);
-        System.out.println("\n Products");
-        double invoicedTotal = displayInvoicedProducts(invoiceID);
-        System.out.println("\nTotal Bill: " + invoicedTotal);
-        System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-    }
-
     @Override
     void addData(PreparedStatement stmt, Connection con) throws SQLException {
         Input input = new Input();
@@ -196,5 +236,24 @@ public class InvoiceController extends DBServices {
             }
         }
         displayInvoice(invoice.getID());
+    }
+
+    private void displayInvoice(String invoiceID) {
+
+        Invoice invoice = getInvoice(invoiceID);
+        Timestamp date = invoice.getDate();
+        String customerID = invoice.getCustomerID();
+        String customerName = invoice.getCustomerName();
+
+        System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+        System.out.println("                                         SALES INVOICE                                              \n");
+        System.out.println(" Invoice Date: " + date);
+        System.out.println(" Invoice ID: " + invoiceID);
+        System.out.println(" Customer ID: " + customerID);
+        System.out.println(" Customer Name: " + customerName);
+        System.out.println("\n Products");
+        double invoicedTotal = displayInvoicedProducts(invoiceID);
+        System.out.println("\nTotal Bill: " + invoicedTotal);
+        System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     }
 }
